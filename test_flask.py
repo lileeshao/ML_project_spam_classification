@@ -5,27 +5,28 @@ print(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('main.html')
+    return render_template('main.html',text=" ", value=" ", alg=" ")
 
 @app.route('/algorithm', methods=['GET', 'POST'])
 def algorithm():
     return render_template('algorithm.html')
 
-@app.route('/analyst', methods=['GET', 'POST'])
-def analyst():
-    return render_template('main.html')
-
-@app.route('/result', methods=['GET', 'POST'])
+@app.route('/main', methods=['GET', 'POST'])
 def result():
+    text = ''
+    value = ''
+    alg = ''
     if request.method == 'POST':
         user_info = request.values.to_dict()
         text = user_info['email']
         value = 0
-        if user_info['alg'] == 'random':
+        alg = user_info['alg']
+        print(user_info)
+        if alg == 'random':
             value = Random(text)
             value = round(value)
         
-    return render_template('result.html',text=text, value=value, alg=user_info['alg'])
+    return render_template('main.html',text=text, value=value, alg=alg)
 
 @app.route('/dataset', methods=['GET', 'POST'])
 def dataset():
